@@ -1,7 +1,7 @@
 ﻿namespace FSharpKoans
 open NUnit.Framework
 
-module ``13: String manipulation`` =
+module ``11: String manipulation`` =
     [<Test>]
     let ``01 Finding the length of a string`` () =
         let a = "calamari"

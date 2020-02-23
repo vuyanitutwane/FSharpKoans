@@ -42,7 +42,7 @@ open NUnit.Framework
     or discriminated unions, generic.
 *)
 
-module ``10: Parametric polymorphism`` =
+module ``08: Parametric polymorphism`` =
     (*
         The next test demonstrates *type inference*.
         

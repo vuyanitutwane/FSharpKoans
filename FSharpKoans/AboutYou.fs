@@ -43,23 +43,31 @@ bunch of other things, now that I come to think of it...
 
 But, hey, don't be down.  Don't be despondent, don't be
 depressed!  Because you now know the fundamentals, and
-everything else in the language is built on the fundamentals.
+everything else in this paradigm is built on the fundamentals.
 You've got the mental tools to push on as far as you'd like.
 So, if you want to expand your knowledge and become a
 better functional programmer, there's no time like the present,
 while the functional stuff is still fresh in your head.  Come and
 talk to me, and/or visit a nice website like
 
-fsharpforfunandprofit.com
+https://fsharpforfunandprofit.com
+
+or
+
+http://learnyouahaskell.com/chapters
+
+or even
+
+https://www.scheme.com/tspl4/
 
 ... and I wish you the best as you embark on this voyage of
 discovery.  Functional programming is a rich, amazing experience.
 I hope that you'll enjoy it as much as I do ^_^.
 *)
 
-module ``16: About You`` =
+module ``14: About You`` =
     [<Test>]
     let ``Where to now?`` () =
-        let resources = ["http://fsharpforfunandprofit.com"; "http://fssnip.net"; "http://stackoverflow.com"]
+        let resources = ["https://fsharpforfunandprofit.com"; "http://learnyouahaskell.com/chapters"; "https://www.scheme.com/tspl4/"]
         let visited = __ // <-- as you visit, add to a list here!
         visited |> should equal resources

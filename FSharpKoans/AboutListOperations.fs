@@ -19,7 +19,7 @@ it for a while, select it and push it down to the F# Interactive prompt using Al
 Run it with some sample input, and see what it produces.
 *)
 
-module ``14: List operations are so easy, you could make them yourself!`` =
+module ``12: List operations are so easy, you could make them yourself!`` =
 
     (*
         Once you've learned about the Easy Way of doing something,

@@ -14,7 +14,7 @@ type Option<'a> =
 There are many built-in functions which return an Option.
 *)
 
-module ``11: Exploring types, options, and results`` =
+module ``09: Exploring types, options, and results`` =
    (*
       The next function takes in a name and extracts the surname.
       But not all people have surnames!

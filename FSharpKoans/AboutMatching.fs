@@ -22,7 +22,7 @@ module ``04: Match expressions`` =
         let result =
             match 9001 with
             | FILL_ME__IN -> // <-- use an identifier pattern here!
-                match __ + 1000 with
+                match __ + 1000 with // <-- now use the identifier that you've bound
                 | 10001 -> "Hah! It's a palindromic number!"
                 | x -> "Some number."
             | x -> "I should have matched the other expression."
@@ -70,4 +70,39 @@ module ``04: Match expressions`` =
         mapper 8 |> should equal "Bingo"
         mapper 11 |> should equal "Kelvin"
         mapper 15 |> should equal "Kelvin"
+
+    (*
+        "The OR pattern is used when input data can match multiple patterns,
+        and you want to execute the same code as a result. The types of both
+        sides of the OR pattern must be compatible."
+    *)
+
+    [<Test>]
+    let ``06 Using an OR-pattern`` () =
+        let f input =
+            match input with
+            | "wut" | "lol" -> "yolo"
+            | "sunrise"
+            | "sunset" -> "transition"
+            | FILL__ME_IN
+            | FILL__ME_IN
+            | FILL__ME_IN -> "failure"
+            | _ -> "lolwut"
+        f "lol" |> should equal "yolo"
+        f "wut" |> should equal "yolo"
+        f "Johnny Walker" |> should equal "failure"
+        f "Bell's" |> should equal "failure"
+        f "vodka" |> should equal "failure"
+
+    [<Test>]
+    let ``07 Identifiers bound on all branches of an OR-pattern must be the same`` () =
+        let f input =
+            match input with
+            | 0,0 -> "Both 0"
+            | ___ | ___ -> sprintf "One 0, one %d" __
+            | _ -> "No 0"
+        f (3,0) |> should equal "One 0, one 3"
+        f (0, 4) |> should equal "One 0, one 4"
+        f (9, 5) |> should equal "No 0"
+        f (0, 0) |> should equal "Both 0"
 

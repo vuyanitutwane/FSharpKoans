@@ -84,7 +84,7 @@ module ``02: About Binding`` =
 
     [<Test>]
     let ``04 We can compare values using F#'s comparison operators`` () =
-        1 |???| 2 |> should equal true
+        1 |???| 2 |> should equal true // change the |???| to be an actual operator
         2 |???| 1 |> should equal true
         1 |???| 1 |> should equal true
         1 |???| 1 |> should equal false
@@ -172,10 +172,11 @@ module ``02: About Binding`` =
     let ``10 Constant patterns succeed if both sides match`` () =
         let 900 = __
         let "Can't win all the time" = __
-        () // eh? what's this funny thing? It's called "unit", and you'll learn more about it in AboutUnit.fs later on.
+        ()
 
     [<Test>]
     let ``11 Constant patterns fail if the sides don't match exactly`` () =
+        // fill in something below, on the right-hand side, to make this pattern FAIL
         (fun () ->
             let "FILL ME IN" = FILL__ME_IN
             ()

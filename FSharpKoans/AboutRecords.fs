@@ -22,7 +22,7 @@ type Book =
      Year : int }
 
 // and now, the tests:
-module ``07: On the Record`` =
+module ``13: On the Record`` =
     [<Test>]
     let ``01 Creating records`` () =
         let myRecord = __
@@ -75,3 +75,18 @@ module ``07: On the Record`` =
         y0 |> should equal __
         y1 |> should equal __
         y2 |> should equal __
+
+    (*
+        "The as-pattern is a pattern that has an as clause appended to it.
+        The as clause binds the matched value to a name that can be used
+        in the execution expression of a match expression, or, in the case
+        where this pattern is used in a let binding, the name is added as
+        a binding to the local scope."
+    *)
+
+    [<Test>]
+    let ``07 Binding composed and decomposed structures using 'as'`` () =
+      let f (___ as _____) =
+         { __ with Year = __ + 3 }
+      f { Title="A Wizard of Earthsea"; Author="Ursula K. LeGuin"; Year=1968 }
+      |> should equal { Title="A Wizard of Earthsea"; Author = "Ursula K. LeGuin"; Year = 1971 }

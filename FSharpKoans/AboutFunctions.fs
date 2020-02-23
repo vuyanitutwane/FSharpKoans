@@ -268,11 +268,147 @@ module ``03: Putting the Function into Functional Programming`` =
     let ``26 >>, the 'compose' operator`` () =
         let add5 a = a + 5
         let double a = a * 2
-        let i = add5 >> double
+        let i = add5 >> double // this means the same as: add5, then double
         let j = double >> add5
-        let k = double >> double >> double
+        let k = double >> double >> add5
         let l = j >> i
         i 3 |> should equal __
         j 3 |> should equal __
         k 3 |> should equal __
         l 3 |> should equal __
+
+    [<Test>]
+    let ``27 <<, the 'backwards compose' operator`` () =
+        let add5 a = a + 5
+        let double a = a * 2
+        let i = add5 << double // this means the same as: double, then add5
+        let j = double << add5
+        let k = double << double << add5
+        let l = j << i
+        i 3 |> should equal __
+        j 3 |> should equal __
+        k 3 |> should equal __
+        l 3 |> should equal __
+
+    [<Test>]
+    let ``28 Unit is used when there is no return value for a function``() = 
+        // sendData is a function which is invoked ONLY for its side-effects
+        // It might do something, and then it gives back a unit value.
+        let sendData data = ()
+        sendData "some data to send..." |> should equal ___ // ... don't overthink this one!
+   
+    [<Test>]
+    let ``29 Unit, as an input, conveys no data`` () = 
+        let sayHello () = "hello"
+        sayHello |> should be ofType<FILL_ME_IN>
+        sayHello () |> should be ofType<FILL_ME_IN>
+        sayHello () |> should equal __
+
+    (*
+    When we develop real systems, we often run into problems
+    around time and timing.  For example, consider how a web
+    browser might work.  It loads images and videos and text
+    and all sorts of things on a webpage.  But only a small
+    portion of that webpage is visible to a user at a time, and it
+    is wasteful (and affects performance!) to pull down an image
+    that might never be seen, or to do the work of decoding a
+    video which can't be seen by the user.  So, what do we do?
+
+    If you think carefully about it, you will realize that this is a
+    timing problem.  We don't know what the user will do, and
+    we don't know when (if ever!) a particular thing will be
+    required.  What we want is a way to *DEFER* work, so that
+    it is only done when it needs to be done.
+
+    We can use a ( unit->'a ) function to do this.  The function
+    contains the code that *would* be executed to achieve the goal,
+    but DOES NOT EXECUTE the code until it is called.  Remember
+    that DEFINING a function is not the same as CALLING a function!
+    Then, if/when we need to, we can call the function to perform
+    the work only when it is necessary to do so.
+    *)
+
+    [<Test>]
+    let ``30 Unit is often used to defer code execution`` () =
+        let divideBy10 n () =
+            n / 10
+        let deferred = divideBy10 700
+        divideBy10 |> should be ofType<FILL_ME_IN>
+        deferred |> should be ofType<FILL_ME_IN>
+        divideBy10 850 |> should be ofType<FILL_ME_IN>
+        deferred () |> should be ofType<FILL_ME_IN>
+        deferred () |> should equal __
+        divideBy10 6300 () |> should equal __
+
+    (*
+        Sometimes we want to do something purely for a side-effect
+        that it has.  For example, we may want to read a line from a
+        file just so that we can get to the next line.  In these cases,
+        we use the `ignore` function to throw away a return value.
+    *)
+
+    [<Test>]
+    let ``31 The 'ignore' function is used to map anything to 'unit'`` () =
+        // this next function has a side-effect: it prints something out.
+        let log x =
+            // print out the value of x
+            printfn "%A" x
+            x // return x
+        log 5 |> should equal __
+        ignore (log "blorp") |> should equal __
+        log 19.66 |> ignore |> should equal __
+
+    [<Test>]
+    let ``32 Partially specifying arguments (Part 1).`` () =
+        // this shows you how you can partially specify particular arguments to
+        // reuse functionality.  This technique is exceptionally flexible and often
+        // seen in functional code, so you should try to understand it.
+        let f animal noise = animal + " says " + noise
+        let kittehs = __ "cat"
+        __ "nyan" |> should equal "cat says nyan"
+
+    [<Test>]
+    let ``33 Partially specifying arguments (Part 2).`` () =
+        // as above, but what do you do when the arguments aren't in the order
+        // that you want them to be in?
+        let f animal noise = animal + " says " + noise
+        let howl k = __ // <- multiple words on this line.  You MUST use `f`.
+        howl "dire wolf" |> should equal "dire wolf says slash/crunch/snap"
+        howl "direr wolf" |> should equal "direr wolf says slash/crunch/snap"
+
+    [<Test>]
+    let ``34 Partially specifying arguments (Part 3).`` () =
+        // Extending a bit more, what do you do when you want to apply a function,
+        // but modify the result before you give it back?
+        let f animal noise = animal + " says " + noise
+        let cows = __ // <-- multiple words on this line, or you may want to make this a multi-line thing.  You MUST use `f`.
+        cows "moo" |> should equal "cow says moo, de gozaru"
+        cows "MOOooOO" |> should equal "cow says MOOooOO, de gozaru"
+
+    [<Test>]
+    let ``35 Getting closure`` () =
+        let calculate initial final = // note the number of inputs.
+            let middle = (final - initial) / 2
+            fun t -> t-middle, t+middle
+        // note the number of inputs provided below.  Do you see why I can do this?
+        calculate 10 20 5 |> should equal __
+        calculate 0 600 250 |> should equal __
+
+    [<Test>]
+    let ``36 Using a value defined in an inner scope`` () =
+        // this is very similar to the previous test.
+        let g t =
+            let result = ((t%2)+1) * 10
+            fun x -> result - x
+        g 5 8 |> should equal __
+        g 8 5 |> should equal __
+        // PS. I hope this one brought you some closure.
+
+    [<Test>]
+    let ``37 An operator is just a function in disguise`` () =
+        let apply f x =
+            f x 3
+        apply (/) 27 |> should equal __
+        apply (*) 4 |> should equal __
+        apply (+) 13 |> should equal __
+        apply (-) 8 |> should equal __

@@ -9,7 +9,7 @@ open NUnit.Framework
 *)
 
 
-module ``08: The Good Kind of Discrimination`` = 
+module ``07: The Good Kind of Discrimination`` = 
     type Subject = // <-- feel free to add your own subjects!
     | Philosophy
     | Linguistics
@@ -19,10 +19,10 @@ module ``08: The Good Kind of Discrimination`` =
     | Management
 
     type UndergraduateDegree = 
-    | BSc of Subject * Subject
-    | BCom of Subject * Subject
+    | BSc of first:Subject * second:Subject
+    | BCom of first:Subject * second:Subject
     | BPharm
-    | BA of Subject * Subject
+    | BA of first:Subject * second:Subject
 
     type PostgraduateDegree =
     | Honours of Subject
@@ -53,13 +53,18 @@ module ``08: The Good Kind of Discrimination`` =
         randomOpinion (BA (Linguistics, Philosophy)) |> should equal "A thinker, eh?"
         randomOpinion __ |> should equal "Meh, it's OK."
 
+    [<Test>]
+    let ``03 We can create a discriminated union using named fields`` () =
+        let someDegree = BSc (second = __, first = __)            
+        someDegree |> should equal (BSc (ComputerScience, Mathematics))
+
     type EquipmentStatus =
     | Available
-    | Broken of int // takes an int, gives back en EquipmentStatus
-    | Rented of string
+    | Broken of daysToRepair:int
+    | Rented of renter:string
 
     [<Test>]
-    let ``03 A discriminated union case with associated data is a function`` () =
+    let ``04 A discriminated union case with associated data is a function`` () =
         Broken |> should be ofType<FILL_ME_IN>
         Rented |> should be ofType<FILL_ME_IN>
 
@@ -68,7 +73,7 @@ module ``08: The Good Kind of Discrimination`` =
     | Node of string * BinaryTree * BinaryTree
 
     [<Test>]
-    let ``04 A discriminated union can refer to itself (i.e., it can be recursive).`` () =
+    let ``05 A discriminated union can refer to itself (i.e., it can be recursive).`` () =
         let rec depth x =
             match x with
             | Empty -> 0

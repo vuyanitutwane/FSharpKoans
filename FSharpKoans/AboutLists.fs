@@ -6,7 +6,7 @@ open NUnit.Framework
 Lists are immutable, ordered, finite sequences of a single type.
 *)
 
-module ``12: I Have Here In My Hand A List`` = 
+module ``10: I Have Here In My Hand A List`` = 
     [<Test>]
     let ``01 Creating a list (Syntax 1).`` () = 
         let myList = [ __; __; __; __ ]
