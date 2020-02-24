@@ -58,13 +58,21 @@ module ``07: The Good Kind of Discrimination`` =
         let someDegree = BSc (second = __, first = __)            
         someDegree |> should equal (BSc (ComputerScience, Mathematics))
 
+    [<Test>]
+    let ``04 Pattern-matching using named fields`` () =
+        let result =
+            match BSc (Management, ComputerScience) with
+            | FILL_ME_IN -> "correct" // <-- USE a pattern-match with named fields!
+            | _ -> "nope"
+        result |> should equal "correct"
+
     type EquipmentStatus =
     | Available
     | Broken of daysToRepair:int
     | Rented of renter:string
 
     [<Test>]
-    let ``04 A discriminated union case with associated data is a function`` () =
+    let ``05 A discriminated union case with associated data is a function`` () =
         Broken |> should be ofType<FILL_ME_IN>
         Rented |> should be ofType<FILL_ME_IN>
 
@@ -73,7 +81,7 @@ module ``07: The Good Kind of Discrimination`` =
     | Node of string * BinaryTree * BinaryTree
 
     [<Test>]
-    let ``05 A discriminated union can refer to itself (i.e., it can be recursive).`` () =
+    let ``06 A discriminated union can refer to itself (i.e., it can be recursive).`` () =
         let rec depth x =
             match x with
             | Empty -> 0

@@ -90,3 +90,30 @@ module ``13: On the Record`` =
          { __ with Year = __ + 3 }
       f { Title="A Wizard of Earthsea"; Author="Ursula K. LeGuin"; Year=1968 }
       |> should equal { Title="A Wizard of Earthsea"; Author = "Ursula K. LeGuin"; Year = 1971 }
+
+    // this is how we might define a record type with two generic fields.
+    type GenericRecordExample<'a,'b> = {
+        Something : 'a
+        Blah : int
+        Otherwise : 'b
+        What : 'a * string * 'b
+    }
+    // we might create this with: { Something=5; Blah=8; Otherwise=9.3; What=77,"hi",0.88 }
+
+    type MyRecord = {
+        Who : FILL_ME_IN // <-- should be generic
+        What : FILL_ME_IN // <-- should be generic, and a different type to Who
+        Where : string
+    }
+
+    [<Test>]
+    let ``08 Creating a generic record`` () =
+        // You need to edit the definition of MyRecord first!  It's just above this test.
+        let a = __
+        let b = __  
+        a.Who |> should equal "The Doctor"
+        b.Who |> should equal 'R'
+        a.What |> should equal 4.53
+        b.What |> should equal false
+        a.Where |> should equal "TTFN"
+        b.Where |> should equal "tiffin"

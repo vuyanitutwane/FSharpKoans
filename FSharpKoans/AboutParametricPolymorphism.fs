@@ -58,7 +58,7 @@ module ``08: Parametric polymorphism`` =
     *)
    
     [<Test>]
-    let ``01 The type of symbols in variable patterns are inferred`` () = 
+    let ``01 The type of symbols in variable patterns is inferred`` () = 
         let x = 50
         let y = "a string"
         let z = -4.23
@@ -83,33 +83,6 @@ module ``08: Parametric polymorphism`` =
         let f x y = __
         f 4 5 |> should equal (4, 5, 5)
         f "k" 'p' |> should equal ("k", 'p', 'p')
-
-    // this is how we might define a record type with two generic fields.
-    type GenericRecordExample<'a,'b> = {
-        Something : 'a
-        Blah : int
-        Otherwise : 'b
-        What : 'a * string * 'b
-    }
-    // we might create this with: { Something=5; Blah=8; Otherwise=9.3; What=77,"hi",0.88 }
-
-    type MyRecord = {
-        Who : FILL_ME_IN // <-- should be generic
-        What : FILL_ME_IN // <-- should be generic, and a different type to Who
-        Where : string
-    }
-
-    [<Test>]
-    let ``04 Creating a generic record`` () =
-        // You need to edit the definition of MyRecord first!  It's just above this test.
-        let a = __
-        let b = __  
-        a.Who |> should equal "The Doctor"
-        b.Who |> should equal 'R'
-        a.What |> should equal 4.53
-        b.What |> should equal false
-        a.Where |> should equal "TTFN"
-        b.Where |> should equal "tiffin"
      
     type GenericDiscriminatedUnionExample<'a,'b> =
     | Frist
@@ -117,7 +90,7 @@ module ``08: Parametric polymorphism`` =
     | Thrid of ('a -> ('b * 'a * int)) // <-- this shouldn't look odd.  Functions are first-class!
 
     [<Test>]
-    let ``05 Creating a generic discriminated union (Part 1).`` () =
+    let ``04 Creating a generic discriminated union (Part 1).`` () =
         let a = Secnod (6.55, 7)
         let b = Thrid (fun k -> true, k, 8)
         // how do you write a generic type?
@@ -130,7 +103,7 @@ module ``08: Parametric polymorphism`` =
     | Sxi of FILL_ME_IN
 
     [<Test>]
-    let ``06 Creating a generic discriminated union (Part 2).`` () =
+    let ``05 Creating a generic discriminated union (Part 2).`` () =
         // You need to edit the definition of MyDiscriminatedUnion first!  It's just above this test.
         let a = __
         let b = __
